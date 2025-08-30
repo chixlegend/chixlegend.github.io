@@ -34,31 +34,32 @@
 
     /* Hero section with purple background blended to black */
     .hero {
-      background: 
+      background:
         linear-gradient(to bottom, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%),
         url('purple_bg.jpg') no-repeat center center/cover;
       text-align: center;
-      padding: 80px 20px 40px;
+      padding: 80px 20px 20px;
     }
 
     .hero h1 {
       font-size: 80px;
-      margin: 0;
+      margin-bottom: 20px;
       font-weight: bold;
     }
 
     .about-text {
       max-width: 700px;
-      margin: 20px auto;
+      margin: 0 auto 20px;
       font-size: 16px;
-      line-height: 1.6;
+      line-height: 1.4;
+      letter-spacing: 0.5px;
     }
 
     /* Profile */
     .profile {
       display: flex;
       justify-content: center;
-      padding: 30px 0;
+      padding: 10px 0 30px;
     }
 
     .profile img {
@@ -69,17 +70,28 @@
 
     /* Mobile Responsive */
     @media (max-width: 768px) {
+      header img.logo {
+        height: 30px;
+      }
+
       .hero h1 {
         font-size: 48px;
+        margin-bottom: 15px;
       }
 
       .about-text {
         font-size: 14px;
+        line-height: 1.3;
+        margin-bottom: 15px;
         padding: 0 10px;
       }
 
+      .profile {
+        padding: 5px 0 20px;
+      }
+
       .profile img {
-        max-width: 100%;
+        max-width: 95%;
       }
     }
   </style>
@@ -96,11 +108,7 @@
   <section class="hero">
     <h1>ABOUT</h1>
     <p class="about-text">
-      Shreyash Ravindra Patole (born November 15 2005), professionally known as Chix Legend, 
-      is an emerging Indian DJ, music producer, and songwriter from Rahuri, Maharashtra. 
-      With a passion for crafting emotionally rich electronic music, he blends future bass, 
-      melodic house, and Indian classical influences to create a unique sound that resonates 
-      deeply with listeners.
+      Shreyash Ravindra Patole (born November 15 2005), professionally known as Chix Legend, is an emerging Indian DJ, music producer, and songwriter from Rahuri, Maharashtra. With a passion for crafting emotionally rich electronic music, he blends future bass, melodic house, and Indian classical influences to create a unique sound that resonates deeply with listeners.
     </p>
   </section>
 
