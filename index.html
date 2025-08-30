@@ -10,6 +10,7 @@
       font-family: Arial, sans-serif;
       background: #000;
       color: #fff;
+      overflow-x: hidden;
     }
 
     /* Header */
@@ -20,6 +21,8 @@
       align-items: center;
       padding: 10px 20px;
       border-bottom: 3px solid black;
+      position: relative;
+      z-index: 10;
     }
 
     header img.logo {
@@ -32,7 +35,7 @@
       cursor: pointer;
     }
 
-    /* Hero section with purple background blended to black */
+    /* Hero section */
     .hero {
       background:
         linear-gradient(to bottom, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%),
@@ -45,18 +48,6 @@
       font-size: 80px;
       margin-bottom: 20px;
       font-weight: bold;
-    }
-
-    .about-text {
-      max-width: 700px;
-      margin: 0 auto 20px;
-      font-size: 16px;
-      line-height: 1.4;
-      letter-spacing: 0.5px;
-    }
-
-    .about-text strong {
-      font-weight: 900;
     }
 
     /* Profile */
@@ -90,6 +81,53 @@
       max-width: 90%;
     }
 
+    /* Fullscreen Menu Overlay */
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .menu-overlay a {
+      font-size: 40px;
+      color: #fff;
+      text-decoration: none;
+      margin: 20px 0;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .menu-overlay a:hover {
+      color: #a64dff; /* purple hover */
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
     /* Mobile Responsive */
     @media (max-width: 768px) {
       header img.logo {
@@ -97,23 +135,11 @@
       }
 
       .menu-icon {
-        height: 22px;
+        height: 28px;
       }
 
       .hero h1 {
         font-size: 48px;
-        margin-bottom: 15px;
-      }
-
-      .about-text {
-        font-size: 14px;
-        line-height: 1.3;
-        margin-bottom: 15px;
-        padding: 0 10px;
-      }
-
-      .profile {
-        padding: 5px 0 20px;
       }
 
       .profile img {
@@ -123,6 +149,14 @@
       .listen h2 {
         font-size: 24px;
       }
+
+      .menu-overlay a {
+        font-size: 28px;
+      }
+
+      .close-btn {
+        font-size: 32px;
+      }
     }
   </style>
 </head>
@@ -131,35 +165,48 @@
   <!-- Header -->
   <header>
     <img src="chixlegend_black_logo.png" alt="Chix Legend Logo" class="logo">
-    <img src="menu.png" alt="Menu Icon" class="menu-icon">
+    <img src="menu.png" alt="Menu Icon" class="menu-icon" onclick="openMenu()">
   </header>
 
-  <!-- Hero / About Section -->
+  <!-- Hero -->
   <section class="hero">
-    <h1>ABOUT</h1>
-    <p class="about-text">
-      <strong>Shreyash Ravindra Patole (born November 15 2005)</strong>, professionally known as 
-      <strong>Chix Legend</strong>, is an emerging Indian DJ, music producer, and songwriter from Rahuri, Maharashtra.  
-      With a passion for crafting emotionally rich electronic music, he blends future bass, melodic house, and Indian classical influences to create a <strong>unique sound that resonates deeply with listeners.</strong>
-    </p>
+    <h1>CHIX LEGEND</h1>
   </section>
 
-  <!-- Profile Image -->
+  <!-- Profile -->
   <div class="profile">
     <img src="chixlegend_horizontal.jpg" alt="Chix Legend">
   </div>
 
-  <!-- Listen Section -->
+  <!-- Listen -->
   <section class="listen">
     <h2>LISTEN</h2>
     <iframe style="border-radius:12px" 
       src="https://open.spotify.com/embed/artist/7kfjOHllR49QSahfBa8YY6?utm_source=generator" 
       width="100%" height="380" frameborder="0" 
-      allowfullscreen="" 
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
       loading="lazy">
     </iframe>
   </section>
+
+  <!-- Fullscreen Menu -->
+  <div class="menu-overlay" id="menuOverlay">
+    <span class="close-btn" onclick="closeMenu()">×</span>
+    <a href="#about">About</a>
+    <a href="#music">Music</a>
+    <a href="#contact">Contact</a>
+    <a href="#social">Social</a>
+  </div>
+
+  <script>
+    function openMenu() {
+      document.getElementById("menuOverlay").classList.add("active");
+    }
+
+    function closeMenu() {
+      document.getElementById("menuOverlay").classList.remove("active");
+    }
+  </script>
 
 </body>
 </html>
