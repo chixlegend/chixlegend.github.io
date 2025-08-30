@@ -5,15 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chix Legend</title>
   <style>
-    body {
+    /* Reset styles and base fonts */
+    html, body {
       margin: 0;
+      padding: 0;
       font-family: Arial, sans-serif;
+      box-sizing: border-box;
       background: url('purple_bg.jpg') no-repeat center center fixed;
       background-size: cover;
       color: #fff;
     }
 
-    /* Overlay for better text visibility */
     body::before {
       content: "";
       position: fixed;
@@ -22,10 +24,10 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(to bottom, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%);
-      z-index: -1;
+      z-index: -2;
     }
 
-    /* Header - now fixed at the top */
+    /* Header (always on top, responsive) */
     header {
       position: fixed;
       top: 0;
@@ -35,36 +37,42 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
+      padding: 10px 24px;
       border-bottom: 3px solid black;
-      z-index: 100;
+      z-index: 2000;
+      min-height: 56px;
+      box-sizing: border-box;
     }
-
     header img.logo {
       height: 40px;
+      max-width: 160px;
     }
-
     .menu-icon {
       height: 40px;
       width: 40px;
       cursor: pointer;
+      display: block;
     }
 
-    /* Push main content down so it's not hidden behind fixed header */
+    /* Main Content Spacing Fix for Header */
     .hero {
       text-align: center;
       padding: 80px 20px 40px;
-      margin-top: 70px; /* fixed header height plus margin */
+      margin-top: 80px; /* header offset */
+      box-sizing: border-box;
     }
-
+    .hero h1 {
+      font-size: 3.5rem;
+      margin: 0;
+      font-weight: bold;
+    }
     .about-text {
       max-width: 700px;
       margin: 20px auto;
-      font-size: 16px;
-      line-height: 1.4;
+      font-size: 1.15rem;
+      line-height: 1.5;
+      text-align: center;
     }
-
-    /* Bold highlights */
     .bold {
       font-weight: bold;
     }
@@ -72,95 +80,122 @@
     .profile {
       display: flex;
       justify-content: center;
-      padding: 30px 0;
+      padding: 32px 0;
     }
-
     .profile img {
-      max-width: 90%;
+      width: 100%;
+      max-width: 450px;
       height: auto;
       border: 4px solid #000;
+      border-radius: 12px;
+      box-sizing: border-box;
+      object-fit: cover;
+      background: #222;
     }
 
-    /* Spotify embed */
+    /* Spotify Embed */
     .listen {
       text-align: center;
       padding: 40px 20px;
     }
-
     .listen h2 {
-      font-size: 32px;
+      font-size: 2rem;
       margin-bottom: 20px;
       font-weight: bold;
     }
+    .listen iframe {
+      width: 100%;
+      max-width: 420px;
+      min-height: 280px;
+      border-radius: 12px;
+      background: #222;
+    }
 
-    /* Fullscreen menu overlay */
+    /* Menu overlay (fullscreen mobile menu) */
     .menu-overlay {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       display: none;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      z-index: 1000;
-
-      /* 🔥 Purple background with blur */
+      z-index: 3000;
       background: url('purple_bg.jpg') no-repeat center center fixed;
       background-size: cover;
+      box-sizing: border-box;
+      overflow-y: auto;
     }
-
-    /* Dark blur overlay inside the menu */
+    .menu-overlay.open {
+      display: flex;
+    }
     .menu-overlay::before {
       content: "";
       position: absolute;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background: rgba(0,0,0,0.7);
       backdrop-filter: blur(12px);
       z-index: -1;
     }
-
     .menu-overlay a {
       color: white;
-      font-size: 28px;
-      margin: 15px 0;
+      font-size: 2rem;
+      margin: 18px 0;
       text-decoration: none;
       font-weight: bold;
+      letter-spacing: 0.03em;
+      transition: color 0.18s;
     }
-
     .menu-overlay a:hover {
       color: #9b59b6;
     }
-
     .close-btn {
       position: absolute;
       top: 20px;
-      right: 30px;
-      font-size: 40px;
+      right: 32px;
+      font-size: 2.5rem;
       color: white;
       cursor: pointer;
+      font-weight: bold;
+      z-index: 10;
     }
 
-    @media (max-width: 768px) {
-      header img.logo {
-        height: 28px;
+    /* Responsive: Mobile adjustments */
+    @media (max-width: 1000px) {
+      .hero h1 { font-size: 2.6rem; }
+      .about-text { font-size: 1rem; }
+      .profile img { max-width: 98vw; }
+    }
+    @media (max-width: 600px) {
+      header {
+        padding: 8px 8px;
+        min-height: 48px;
       }
-      .hero h1 {
-        font-size: 48px;
-      }
-      .about-text {
-        font-size: 14px;
-        line-height: 1.3;
-        margin: 10px auto;
-      }
+      header img.logo { height: 28px; max-width: 110px; }
+      .menu-icon { height: 32px; width: 32px; }
       .hero {
-        margin-top: 60px; /* smaller header at mobile */
+        margin-top: 60px;
+        padding: 42px 4vw 24px;
       }
+      .hero h1 { font-size: 1.5rem; }
+      .about-text { font-size: 0.97rem; padding: 8px 0;}
+      .profile { padding: 16px 0; }
+      .profile img { border-width: 2px; border-radius: 8px; }
+      .listen h2 { font-size: 1.1rem; }
+      .listen { padding: 18px 8px;}
+      .listen iframe { min-height: 210px; }
+      .menu-overlay a { font-size: 1.2rem; }
+      .close-btn { font-size: 2rem; top: 12px; right: 16px;}
     }
+
+    /* Prevent body scroll when menu is open (JS will toggle .no-scroll) */
+    body.no-scroll { overflow: hidden; }
+
   </style>
 </head>
 <body>
@@ -191,9 +226,9 @@
   <!-- Spotify Embed -->
   <div class="listen">
     <h2>Listen Now</h2>
-    <iframe style="border-radius:12px" 
+    <iframe 
       src="https://open.spotify.com/embed/artist/7kfjOHllR49QSahfBa8YY6?utm_source=generator" 
-      width="100%" height="352" frameBorder="0" allowfullscreen="" 
+      frameBorder="0" allowfullscreen="" 
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
     </iframe>
   </div>
@@ -201,123 +236,25 @@
   <!-- Fullscreen Menu -->
   <div id="menuOverlay" class="menu-overlay">
     <span class="close-btn" onclick="closeMenu()">&times;</span>
-    <a href="#about">PROJECTS</a>
-    <a href="#music">MUSIC</a>
-    <a href="#contact">SOCIAL</a>
+    <a href="#about" onclick="closeMenu()">PROJECTS</a>
+    <a href="#music" onclick="closeMenu()">MUSIC</a>
+    <a href="#contact" onclick="closeMenu()">SOCIAL</a>
   </div>
 
   <script>
+    // Responsive mobile menu logic
     function openMenu() {
-      document.getElementById("menuOverlay").style.display = "flex";
+      document.getElementById("menuOverlay").classList.add("open");
+      document.body.classList.add("no-scroll");
     }
     function closeMenu() {
-      document.getElementById("menuOverlay").style.display = "none";
+      document.getElementById("menuOverlay").classList.remove("open");
+      document.body.classList.remove("no-scroll");
     }
-  </script>
-
-</body>
-</html>
-    }
-
-    /* Dark blur overlay inside the menu */
-    .menu-overlay::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(12px);
-      z-index: -1;
-    }
-
-    .menu-overlay a {
-      color: white;
-      font-size: 28px;
-      margin: 15px 0;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .menu-overlay a:hover {
-      color: #9b59b6;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 40px;
-      color: white;
-      cursor: pointer;
-    }
-
-    @media (max-width: 768px) {
-      header img.logo {
-        height: 28px;
-      }
-      .hero h1 {
-        font-size: 48px;
-      }
-      .about-text {
-        font-size: 14px;
-        line-height: 1.3;
-        margin: 10px auto;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Header -->
-  <header>
-    <img src="chixlegend_black_logo.png" alt="Chix Legend Logo" class="logo">
-    <img src="menu.png" alt="Menu" class="menu-icon" onclick="openMenu()">
-  </header>
-
-  <!-- Hero / About Section -->
-  <section class="hero">
-    <h1>ABOUT</h1>
-    <p class="about-text">
-      <span class="bold">Shreyash Ravindra Patole</span> (born November 15 2005), professionally known as 
-      <span class="bold">Chix Legend</span>, is an emerging Indian DJ, music producer, and songwriter 
-      from Rahuri, Maharashtra. With a passion for crafting emotionally rich electronic music, 
-      he blends <span class="bold">future bass, melodic house, and Indian classical influences</span> 
-      to create a unique sound that resonates deeply with listeners.
-    </p>
-  </section>
-
-  <!-- Profile Image -->
-  <div class="profile">
-    <img src="chixlegend_horizontal.jpg" alt="Chix Legend">
-  </div>
-
-  <!-- Spotify Embed -->
-  <div class="listen">
-    <h2>Listen Now</h2>
-    <iframe style="border-radius:12px" 
-      src="https://open.spotify.com/embed/artist/7kfjOHllR49QSahfBa8YY6?utm_source=generator" 
-      width="100%" height="352" frameBorder="0" allowfullscreen="" 
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-    </iframe>
-  </div>
-
-  <!-- Fullscreen Menu -->
-  <div id="menuOverlay" class="menu-overlay">
-    <span class="close-btn" onclick="closeMenu()">&times;</span>
-    <a href="#about">PROJECTS</a>
-    <a href="#music">MUSIC</a>
-    <a href="#contact">SOCIAL</a>
-  </div>
-
-  <script>
-    function openMenu() {
-      document.getElementById("menuOverlay").style.display = "flex";
-    }
-    function closeMenu() {
-      document.getElementById("menuOverlay").style.display = "none";
-    }
+    // Optional: Close menu when pressing Esc key
+    window.addEventListener('keydown', function(e) {
+      if(e.key === "Escape"){ closeMenu(); }
+    });
   </script>
 
 </body>
