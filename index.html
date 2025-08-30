@@ -25,13 +25,19 @@
       z-index: -1;
     }
 
-    /* Header */
+    /* Header - now fixed at the top */
     header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
       background: #fff;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 10px 20px;
+      border-bottom: 3px solid black;
+      z-index: 100;
     }
 
     header img.logo {
@@ -44,16 +50,11 @@
       cursor: pointer;
     }
 
-    /* Hero section */
+    /* Push main content down so it's not hidden behind fixed header */
     .hero {
       text-align: center;
       padding: 80px 20px 40px;
-    }
-
-    .hero h1 {
-      font-size: 80px;
-      margin: 0;
-      font-weight: bold;
+      margin-top: 70px; /* fixed header height plus margin */
     }
 
     .about-text {
@@ -108,6 +109,114 @@
       /* 🔥 Purple background with blur */
       background: url('purple_bg.jpg') no-repeat center center fixed;
       background-size: cover;
+    }
+
+    /* Dark blur overlay inside the menu */
+    .menu-overlay::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(12px);
+      z-index: -1;
+    }
+
+    .menu-overlay a {
+      color: white;
+      font-size: 28px;
+      margin: 15px 0;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .menu-overlay a:hover {
+      color: #9b59b6;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      header img.logo {
+        height: 28px;
+      }
+      .hero h1 {
+        font-size: 48px;
+      }
+      .about-text {
+        font-size: 14px;
+        line-height: 1.3;
+        margin: 10px auto;
+      }
+      .hero {
+        margin-top: 60px; /* smaller header at mobile */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <img src="chixlegend_black_logo.png" alt="Chix Legend Logo" class="logo">
+    <img src="menu.png" alt="Menu" class="menu-icon" onclick="openMenu()">
+  </header>
+
+  <!-- Hero / About Section -->
+  <section class="hero">
+    <h1>ABOUT</h1>
+    <p class="about-text">
+      <span class="bold">Shreyash Ravindra Patole</span> (born November 15 2005), professionally known as 
+      <span class="bold">Chix Legend</span>, is an emerging Indian DJ, music producer, and songwriter 
+      from Rahuri, Maharashtra. With a passion for crafting emotionally rich electronic music, 
+      he blends <span class="bold">future bass, melodic house, and Indian classical influences</span> 
+      to create a unique sound that resonates deeply with listeners.
+    </p>
+  </section>
+
+  <!-- Profile Image -->
+  <div class="profile">
+    <img src="chixlegend_horizontal.jpg" alt="Chix Legend">
+  </div>
+
+  <!-- Spotify Embed -->
+  <div class="listen">
+    <h2>Listen Now</h2>
+    <iframe style="border-radius:12px" 
+      src="https://open.spotify.com/embed/artist/7kfjOHllR49QSahfBa8YY6?utm_source=generator" 
+      width="100%" height="352" frameBorder="0" allowfullscreen="" 
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    </iframe>
+  </div>
+
+  <!-- Fullscreen Menu -->
+  <div id="menuOverlay" class="menu-overlay">
+    <span class="close-btn" onclick="closeMenu()">&times;</span>
+    <a href="#about">PROJECTS</a>
+    <a href="#music">MUSIC</a>
+    <a href="#contact">SOCIAL</a>
+  </div>
+
+  <script>
+    function openMenu() {
+      document.getElementById("menuOverlay").style.display = "flex";
+    }
+    function closeMenu() {
+      document.getElementById("menuOverlay").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
     }
 
     /* Dark blur overlay inside the menu */
