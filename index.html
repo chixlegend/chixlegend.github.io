@@ -32,9 +32,11 @@
       cursor: pointer;
     }
 
-    /* Hero section with purple background */
+    /* Hero section with purple background blended to black */
     .hero {
-      background: url('purple_bg.jpg') no-repeat center center/cover;
+      background: 
+        linear-gradient(to bottom, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%),
+        url('purple_bg.jpg') no-repeat center center/cover;
       text-align: center;
       padding: 80px 20px 40px;
     }
@@ -52,6 +54,7 @@
       line-height: 1.6;
     }
 
+    /* Profile */
     .profile {
       display: flex;
       justify-content: center;
@@ -62,6 +65,22 @@
       max-width: 90%;
       height: auto;
       border: 4px solid #000;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 48px;
+      }
+
+      .about-text {
+        font-size: 14px;
+        padding: 0 10px;
+      }
+
+      .profile img {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
