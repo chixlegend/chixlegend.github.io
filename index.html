@@ -33,6 +33,13 @@
       align-items: center;
       padding: 10px 20px;
       border-bottom: 3px solid black;
+
+      /* 🔒 Keep header fixed */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
     }
 
     header img.logo {
@@ -48,7 +55,7 @@
     /* Hero section */
     .hero {
       text-align: center;
-      padding: 80px 20px 40px;
+      padding: 120px 20px 40px; /* increased top padding to avoid overlap */
     }
 
     .hero h1 {
