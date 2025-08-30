@@ -8,8 +8,21 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #000;
+      background: url('purple_bg.jpg') no-repeat center center fixed;
+      background-size: cover;
       color: #fff;
+    }
+
+    /* Overlay for better text visibility */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 70%, rgba(0,0,0,1) 100%);
+      z-index: -1;
     }
 
     /* Header */
@@ -19,7 +32,6 @@
       justify-content: space-between;
       align-items: center;
       padding: 10px 20px;
-      border-bottom: 3px solid black;
     }
 
     header img.logo {
@@ -28,63 +40,38 @@
 
     .menu-icon {
       height: 40px;
-      width: auto;
+      width: 40px;
       cursor: pointer;
     }
 
-    /* Hero section with stable background */
+    /* Hero section */
     .hero {
-      position: relative;
       text-align: center;
-      padding: 80px 20px 20px;
-
-      background: url('purple_bg.jpg') no-repeat center center;
-      background-size: cover;
-      background-attachment: fixed; /* 🔥 keeps image stable */
-    }
-
-    /* Dark overlay for opacity */
-    .hero::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6); /* 60% opacity */
-      z-index: 0;
-    }
-
-    /* Hero text on top of overlay */
-    .hero h1,
-    .hero p {
-      position: relative;
-      z-index: 1;
+      padding: 80px 20px 40px;
     }
 
     .hero h1 {
       font-size: 80px;
-      margin-bottom: 20px;
+      margin: 0;
       font-weight: bold;
     }
 
     .about-text {
       max-width: 700px;
-      margin: 0 auto 20px;
+      margin: 20px auto;
       font-size: 16px;
       line-height: 1.4;
-      letter-spacing: 0.5px;
     }
 
-    .about-text strong {
-      font-weight: 900;
+    /* Bold highlights */
+    .bold {
+      font-weight: bold;
     }
 
-    /* Profile */
     .profile {
       display: flex;
       justify-content: center;
-      padding: 10px 0 30px;
+      padding: 30px 0;
     }
 
     .profile img {
@@ -93,11 +80,10 @@
       border: 4px solid #000;
     }
 
-    /* Listen section */
+    /* Spotify embed */
     .listen {
       text-align: center;
       padding: 40px 20px;
-      background: #111;
     }
 
     .listen h2 {
@@ -106,76 +92,70 @@
       font-weight: bold;
     }
 
-    iframe {
-      border-radius: 12px;
-      max-width: 90%;
-    }
-
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-      header img.logo {
-        height: 30px;
-      }
-
-      .menu-icon {
-        height: 22px;
-      }
-
-      .hero h1 {
-        font-size: 48px;
-        margin-bottom: 15px;
-      }
-
-      .about-text {
-        font-size: 14px;
-        line-height: 1.3;
-        margin-bottom: 15px;
-        padding: 0 10px;
-      }
-
-      .profile {
-        padding: 5px 0 20px;
-      }
-
-      .profile img {
-        max-width: 95%;
-      }
-
-      .listen h2 {
-        font-size: 24px;
-      }
-    }
-
-    /* ===== Menu Overlay (unchanged from before) ===== */
+    /* Fullscreen menu overlay */
     .menu-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      backdrop-filter: blur(8px);
       display: none;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      z-index: 999;
+      flex-direction: column;
+      z-index: 1000;
+
+      /* 🔥 Purple background with blur */
+      background: url('purple_bg.jpg') no-repeat center center fixed;
+      background-size: cover;
     }
 
-    .menu-overlay.active {
-      display: flex;
+    /* Dark blur overlay inside the menu */
+    .menu-overlay::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(12px);
+      z-index: -1;
     }
 
     .menu-overlay a {
-      color: #fff;
+      color: white;
       font-size: 28px;
-      text-decoration: none;
       margin: 15px 0;
-      transition: color 0.3s;
+      text-decoration: none;
+      font-weight: bold;
     }
 
     .menu-overlay a:hover {
-      color: #9b59b6; /* purple hover */
+      color: #9b59b6;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: white;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      header img.logo {
+        height: 28px;
+      }
+      .hero h1 {
+        font-size: 48px;
+      }
+      .about-text {
+        font-size: 14px;
+        line-height: 1.3;
+        margin: 10px auto;
+      }
     }
   </style>
 </head>
@@ -184,16 +164,18 @@
   <!-- Header -->
   <header>
     <img src="chixlegend_black_logo.png" alt="Chix Legend Logo" class="logo">
-    <img src="menu.png" alt="Menu Icon" class="menu-icon" onclick="toggleMenu()">
+    <img src="menu.png" alt="Menu" class="menu-icon" onclick="openMenu()">
   </header>
 
   <!-- Hero / About Section -->
   <section class="hero">
     <h1>ABOUT</h1>
     <p class="about-text">
-      <strong>Shreyash Ravindra Patole (born November 15 2005)</strong>, professionally known as 
-      <strong>Chix Legend</strong>, is an emerging Indian DJ, music producer, and songwriter from Rahuri, Maharashtra.  
-      With a passion for crafting emotionally rich electronic music, he blends future bass, melodic house, and Indian classical influences to create a <strong>unique sound that resonates deeply with listeners.</strong>
+      <span class="bold">Shreyash Ravindra Patole</span> (born November 15 2005), professionally known as 
+      <span class="bold">Chix Legend</span>, is an emerging Indian DJ, music producer, and songwriter 
+      from Rahuri, Maharashtra. With a passion for crafting emotionally rich electronic music, 
+      he blends <span class="bold">future bass, melodic house, and Indian classical influences</span> 
+      to create a unique sound that resonates deeply with listeners.
     </p>
   </section>
 
@@ -202,29 +184,30 @@
     <img src="chixlegend_horizontal.jpg" alt="Chix Legend">
   </div>
 
-  <!-- Listen Section -->
-  <section class="listen">
-    <h2>LISTEN</h2>
+  <!-- Spotify Embed -->
+  <div class="listen">
+    <h2>Listen Now</h2>
     <iframe style="border-radius:12px" 
       src="https://open.spotify.com/embed/artist/7kfjOHllR49QSahfBa8YY6?utm_source=generator" 
-      width="100%" height="380" frameborder="0" 
-      allowfullscreen="" 
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-      loading="lazy">
+      width="100%" height="352" frameBorder="0" allowfullscreen="" 
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
     </iframe>
-  </section>
+  </div>
 
-  <!-- Fullscreen Menu Overlay -->
-  <div class="menu-overlay" id="menuOverlay">
-    <a href="#about">About</a>
-    <a href="#music">Music</a>
-    <a href="#contact">Contact</a>
-    <a href="#social">Social</a>
+  <!-- Fullscreen Menu -->
+  <div id="menuOverlay" class="menu-overlay">
+    <span class="close-btn" onclick="closeMenu()">&times;</span>
+    <a href="#about">PROJECTS</a>
+    <a href="#music">MUSIC</a>
+    <a href="#contact">SOCIAL</a>
   </div>
 
   <script>
-    function toggleMenu() {
-      document.getElementById("menuOverlay").classList.toggle("active");
+    function openMenu() {
+      document.getElementById("menuOverlay").style.display = "flex";
+    }
+    function closeMenu() {
+      document.getElementById("menuOverlay").style.display = "none";
     }
   </script>
 
